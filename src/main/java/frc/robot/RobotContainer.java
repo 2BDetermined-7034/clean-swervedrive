@@ -4,19 +4,10 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.PS5Controller;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.Constants.OperatorConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.TeleopDrive;
-import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
-import java.io.File;
 
 
 /**
@@ -26,18 +17,10 @@ import java.io.File;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  XboxController driverController = new XboxController(0);
-  SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"swerve/neo"));
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    TeleopDrive closedFieldRel = new TeleopDrive(
-            swerve,
-            () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.deadband),
-            () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.deadband),
-            () -> driverController.getRightX(), () -> true);
-
-    swerve.setDefaultCommand(closedFieldRel);
+    
     // Configure the trigger bindings
     configureBindings();
   }
@@ -52,7 +35,6 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    new Trigger(driverController::getBackButton).onTrue(new InstantCommand(swerve::zeroGyro));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
