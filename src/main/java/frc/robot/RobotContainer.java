@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.PS5Controller;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.OperatorConstants;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -25,7 +26,7 @@ import java.io.File;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  PS5Controller driverController = new PS5Controller(0);
+  XboxController driverController = new XboxController(0);
   SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"swerve/neo"));
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -51,7 +52,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    new Trigger(driverController::getSquareButton).onTrue(new InstantCommand(swerve::zeroGyro));
+    new Trigger(driverController::getBackButton).onTrue(new InstantCommand(swerve::zeroGyro));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
